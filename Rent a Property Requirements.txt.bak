@@ -1,0 +1,81 @@
+2nd Module Requirements: Property Rental System
+
+Please share the estimate before to start this module. 
+
+Layout: Header Will remain same, But need content area similiar like https://www.zameen.com/new-projects/satellite_arcade_mardan-2126/
+e.g Gallary, Description, Features e.t.c. 
+Same admin controls for approval like we have in the business directory. 
+Search Bar will similar to zameen.com
+
+1. User Interface (UI) Components
+
+Property Listing Screen:
+Display a list of properties with thumbnails (default image) and key details (title, location, price).
+Include filters for property type (commercial/residential), location, price range, and amenities.
+Search bar for quick property search.
+
+Property Details Screen:
+Display the selected property's details, including title, description, price, area, location, and amenities.
+Show a carousel or grid of up to 10 images, with the default image highlighted. Users can swipe through or tap on thumbnails to view larger images.
+Option for users to set a default image from the available images.
+
+Property Submission/Editing Screen:
+
+Form fields for property details:
+Basic Details: Property type (commercial/residential), title, description, price.
+Location: Address, city, postal code.
+Area: Square footage or measurement.
+Amenities: Checkboxes or tags for features like parking, swimming pool, gym, etc.
+Image upload functionality allowing users to submit up to 10 images. The first uploaded image is set as the default, but the user can change this.
+Preview of uploaded images with an option to delete or rearrange them.
+2. Image Handling
+Image Upload:
+Allow users to upload up to 10 images per property.
+Provide an interface to reorder images, with the ability to set any image as the default.
+Image Display:
+Use a carousel or image grid to display uploaded images on the property details screen.
+The default image is displayed prominently as the main image.
+3. Property Interaction Features
+Contact Information:
+Display the property owner's contact number and email on the property details screen.
+Option to copy the contact details or initiate a call/email directly from the app.
+In-App Chat:
+Enable users to start a chat with the property owner or agent directly within the app.
+Display chat history and allow sending text messages, images, or documents.
+4. Backend Integration
+Property Management:
+API endpoints for creating, updating, and deleting property listings.
+Image upload and management endpoints.
+Chat Functionality:
+Real-time messaging API to support chat between users and property owners/agents.
+User Authentication:
+Secure authentication for users to post properties or interact with others.
+5. Data Handling
+Validation:
+Validate input fields (e.g., required fields, image format/size limits, etc.) during property submission.
+Storage:
+Efficiently store property images and details on a backend server or cloud storage.
+6. Notifications
+Push Notifications:
+Notify users of new messages in the chat.
+Alerts for property-related updates (e.g., price changes, new properties matching their search criteria).
+7. Security
+Data Privacy:
+Ensure user data (e.g., contact information, chat history) is securely stored and transmitted.
+Authentication:
+Secure login and property submission process to prevent unauthorized access.
+8. Testing
+Unit Tests:
+Write unit tests for UI components, image handling, and form validation.
+Integration Tests:
+Test backend integration, especially for chat functionality and image upload.
+User Testing:
+Conduct user testing to ensure the module is intuitive and easy to use.
+Additional Considerations
+Localization: Support for multiple languages depending on the target market.
+Responsive Design: Ensure the module works well on various screen sizes, including tablets and larger devices.
+
+
+
+
+

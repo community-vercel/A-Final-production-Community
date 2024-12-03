@@ -1,0 +1,57 @@
+# Community-Project-
+Looking for a similar website like mishmish.ai , The Exact design needs to be copied; we will change some colors and fields there. 
+I will keep adding requirements in this file. 
+
+
+First Module: 
+Start with the Business Directory Module first:
+
+Layout for Bussiness Directory Pages
+Category Page: https://mishmish.ai/places/ 
+Listing Page: https://mishmish.ai/places/category/automotive/ 
+Single Business Page: https://mishmish.ai/places/lone-star-driving-school/
+
+
+Functional Requirements for Business Directory:
+
+User Registration and Login -->Done
+Businesses and users can register and log in using email or social media accounts. -->Done
+Email verification for new registrations. -->Done
+Forgot password and account recovery options. -->Done
+
+Business Profiles
+Create and manage business profiles with details such as name, description, contact information, and operating hours. -->Done
+Upload logo and images for the business. -->Done
+Categories and tags for businesses to facilitate search and filtering. -->Done
+
+Search and Filter
+Search businesses by name, category, location, and tags. --> search by name,location done
+Advanced filters for narrowing down search results (e.g., rating, distance).
+
+Reviews and Ratings
+Users can leave reviews and ratings for businesses. --> done
+Moderation system for reviews (flagging inappropriate content). --> done
+
+Business Listings
+Display business listings with key information (name, category, rating, location). -->Done
+Pagination or infinite scroll for browsing listings. --> done
+
+Favorites and Bookmarks
+Users can save businesses to their favorites/bookmarks for easy access later.
+
+Business Dashboard
+Businesses can view and manage their profile and listings. --> done
+Analytics and insights on profile views, user interactions, and reviews.
+
+Advertisements and Promotions
+Businesses can create and manage advertisements and promotions.
+Options for featured listings to appear at the top of search results.
+
+Notifications
+Email and in-app notifications for account activity, reviews, and promotions.
+Admin notifications for new business registrations and flagged content.
+
+Admin Panel
+Admins can manage users, businesses, categories, and tags. --> done
+Review and approve new business registrations. --> done
+Moderation tools for reviews and reported content.
