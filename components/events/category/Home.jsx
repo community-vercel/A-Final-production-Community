@@ -34,7 +34,7 @@ const CategoryEvents = ({initialeventsData}) => {
     };
 
     try {
-      const response = await fetch(`${serverurl}get-alleventscategory/`, {
+      const response = await fetch(`${serverurl}get-alleventcategories/`, {
         headers: {
           "Content-Type": "application/json",
         },

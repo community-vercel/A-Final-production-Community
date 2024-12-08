@@ -3,6 +3,7 @@ import {
   MicrophoneIcon,
 
 } from "@heroicons/react/16/solid";
+import Image from "next/image";
 import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
@@ -71,9 +72,18 @@ export default function Categories() {
     className: "h-10 w-10 text-gray-600",
   })
 ) :  (
-  <img
-    src={serverurl+'media/' + category.icon}
+  <Image
+src={category.icon
+  ? category.icon.includes('/api/media/')
+    ?serverurl+ category.icon.replace('/api/media/', 'media/')
+    : category.icon.includes('media/')
+      ? serverurl+category.icon
+      :serverurl+ `media/${category.icon}`
+  : '' }
+    // src={serverurl+category.icon.replace('/api/','media/')}
     alt="Category Icon"
+    width={10}
+    height={10}
     className="h-10 w-10"
   />
 ) }
