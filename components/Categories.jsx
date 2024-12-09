@@ -5,11 +5,8 @@ import {
 } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import Link from "next/link";
-
 import React, { useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import Image from "next/image";
-
 export default function Categories() {
   const [categories, setCategories] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -42,7 +39,7 @@ export default function Categories() {
         if (response.ok) {
           rearrangeData(result.data);
         } else {
-          setError(result.error || "Failed to fetch categories");
+          setError(result.error || "Faileds to fetch categories");
         }
       } catch (error) {
         setError("An unexpected error occurred");
