@@ -50,14 +50,17 @@ const Page = () => {
         if (response.ok) {
 
         setCategories(result.results.categories);
+        console.log("values",result.results.tags)
+
  let allTags = [];
-          result.tags.forEach((tag) =>
+          result.results.tags.forEach((tag) =>
             tag.tag.split(",").length > 1
               ? tag.tag.split(",").forEach((iTag) => {
                 allTags.push(iTag) 
               })
               : allTags.push(tag.tag)
           ); 
+          console.log("values",allTags)
           setTags([...new Set(allTags)].sort());
         // if (result.tags) {
         //   const uniqueTags = Array.from(

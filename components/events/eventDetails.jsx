@@ -12,12 +12,34 @@ const DynamicMapComponent = dynamic(() => import("../AHome/Mapcomponent"), { ssr
 
 export default function EventPage({ initialeventsData }) {
   const event = initialeventsData;
+  const serverurl = process.env.NEXT_PUBLIC_DJANGO_URL;
+  const [exists, setExists] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+const [selectedDate, setSelectedDate] = useState("");
 
   const { user_meta, user } = useSelector((state) => state.auth);
   const center = { lat: Number(event.lat), lng: Number(event.longitude) };  // Default center (e.g., NYC)
   const zoom=8;
 
-  const serverurl = process.env.NEXT_PUBLIC_DJANGO_URL;
+const getPayment=async ()=>{
+  
+  try {
+    const response = await fetch(
+      `${serverurl}get-check-payment-reservation/?user_id=${user.id}&event_id=${event.id}&date=${selectedDate}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+    setExists(data.exists); // Set whether the reservation exists
+  } catch (err) {
+  }
+}
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     Name: user && user? user.user_metadata?.full_name:'',
@@ -30,9 +52,18 @@ export default function EventPage({ initialeventsData }) {
   const [error, setError] = useState("");
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // Clear error as user types
+    if (name === "email" || name === "confirmEmail") {
+      setError("");
+    }
   };
 
   const handleFileChange = (e) => {
@@ -41,9 +72,17 @@ export default function EventPage({ initialeventsData }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
     const formDataToSend = new FormData();
+    e.preventDefault();
+
+    // Validate email fields
+    if (formData.email !== formData.confirmEmail) {
+      setError("Email and Confirm Email must match.");
+      return;
+    }
+    setIsSubmitting(true);
+
     formDataToSend.append("name", formData.Name);
     formDataToSend.append("phone", formData.Phone);
     formDataToSend.append("email", formData.email);
@@ -70,6 +109,9 @@ export default function EventPage({ initialeventsData }) {
         toast.success(
           "Payment added sucessfully ,please wait for confirmation"
         );
+        setIsSubmitting(false);
+        getPayment();
+
       } else {
         const error = await response.json();
         toast.error(error);
@@ -79,9 +121,7 @@ export default function EventPage({ initialeventsData }) {
     }
   };
  
-  const [selectedDate, setSelectedDate] = useState("");
   const [eventDates, setEventDates] = useState([]);
-
 
   useEffect(() => {
     const formatDate = (dateString) => {
@@ -89,25 +129,32 @@ export default function EventPage({ initialeventsData }) {
       const options = { weekday: "long", month: "long", day: "numeric" };
       return date.toLocaleDateString("en-US", options);
     };
-
+  
     const generateDateRange = (startDate, endDate) => {
-      const start = new Date(startDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to midnight for an accurate comparison
+  
+      const start = new Date(startDate) < today ? today : new Date(startDate); // Ensure the start date is today or later
       const end = new Date(endDate);
       const dateArray = [];
-
+  
       while (start <= end) {
         dateArray.push(formatDate(start));
         start.setDate(start.getDate() + 1);
       }
       return dateArray;
     };
-
+  
     const eventDatesArray = generateDateRange(event.start_date, event.end_date);
-
+  
     setEventDates(eventDatesArray);
-
+  
     setSelectedDate(eventDatesArray[0]);
+
   }, []);
+  useEffect(()=>{
+    getPayment()
+  },[selectedDate])
   const frontend = process.env.NEXT_PUBLIC_SITE_URL;
 
   const metadata = event
@@ -239,19 +286,30 @@ export default function EventPage({ initialeventsData }) {
                 {event.is_free ? "Free" : "$" + event.price}
               </p>
             </div>
-            <button
+            {exists && exists?(
+               <span>Date already reserved</span>
+
+            ):(
+              user && user.id?(
+                
+              <button
               onClick={toggleModal}
               className="mt-4 md:mt-0 bg-red-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-red-600 transition duration-200"
             >
               Reserve Your Spot
             </button>
+              ):(
+                <span>please login to reserve</span>
+              )
+            )}
+         
           </section>
 
           <section className="mb-10">
             <p className="text-gray-800 text-lg leading-relaxed">
               Join <strong>{event.name}</strong> at the {event.state},
-              {event.city},{event.address} from the {event.start_date} to{" "}
-              {event.end_date}
+              {event.city},{event.address} from the <strong>{event.start_date}</strong> to{" "}<strong>
+              {event.end_date}</strong>
               &nbsp; between &nbsp;
               {event.start_time} to {event.end_time} to secure your spot .
             </p>
@@ -446,8 +504,11 @@ export default function EventPage({ initialeventsData }) {
 
                 <button
                   type="submit"
-                  className="bg-primary text-white px-6 py-3 rounded-lg font-semibold text-lg w-full mt-4 hover:bg-primary transition"
-                >
+                  disabled={isSubmitting}
+
+                  className={`bg-primary text-white px-6 py-3 rounded-lg font-semibold text-lg w-full mt-4 hover:bg-primary transition ${
+                    isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                  }`}                >
                   {event.price > 0 ? "Submit payment" : "Add "}
                 </button>
               </form>
