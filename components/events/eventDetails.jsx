@@ -56,8 +56,23 @@ const getPayment=async ()=>{
   //   const { name, value } = e.target;
   //   setFormData({ ...formData, [name]: value });
   // };
+  const [isValid, setIsValid] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    const phonePattern = /^(?:\(\d{3}\)\s?|\d{3}[-.\s]?)\d{3}[-.\s]?\d{4}$/;
+
+    if (name === "Phone") {
+      // Validate the input against the regex
+      if (!value || phonePattern.test(value)) {
+        setError("");
+        setIsValid(true)
+
+      } else {
+        setError("Please enter a valid U.S. phone number.");
+        setIsValid(false)
+      }
+    }
     setFormData({ ...formData, [name]: value });
 
     // Clear error as user types
@@ -81,6 +96,12 @@ const getPayment=async ()=>{
       setError("Email and Confirm Email must match.");
       return;
     }
+    if (isValid) {
+    } else {
+      setError("Enter valid phone");
+      return;
+    }
+    
     setIsSubmitting(true);
 
     formDataToSend.append("name", formData.Name);
