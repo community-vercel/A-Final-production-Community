@@ -1,9 +1,14 @@
 "use client";
 import CardService from "@/components/CardService";
 import Checkbox from "@/components/Checkbox";
+import StarRating from "@/components/StarRating";
+import { ArrowUpCircleIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, HeartIcon, PhoneIcon, ReceiptPercentIcon } from "@heroicons/react/16/solid";
+import Image from "next/image";
+import Link from "next/link";
  
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense } from "react";
+import { FaAddressCard } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const Page = () => {
@@ -45,14 +50,17 @@ const Page = () => {
         if (response.ok) {
 
         setCategories(result.results.categories);
+        console.log("values",result.results.tags)
+
  let allTags = [];
-          result.tags.forEach((tag) =>
+          result.results.tags.forEach((tag) =>
             tag.tag.split(",").length > 1
               ? tag.tag.split(",").forEach((iTag) => {
                 allTags.push(iTag) 
               })
               : allTags.push(tag.tag)
           ); 
+          console.log("values",allTags)
           setTags([...new Set(allTags)].sort());
         // if (result.tags) {
         //   const uniqueTags = Array.from(
@@ -177,11 +185,104 @@ const Page = () => {
             <div className="md:w-full">
               <div className="flex gap-x-4 gap-y-5 flex-wrap">
                 {results?.map((item) => (
-                  <CardService
-                    business={item}
-                    key={item.id}
-                    user_id={user.id}
-                  />
+                <div className="flex-1 lg:w-[75%] p-4 md:p-6 lg:p-8 bg-white rounded-3xl border border-transparent hover:border-secondary transition-all duration-200 mx-auto">
+                <div>
+                  
+                  <Link
+                    href={item.id ? `/business/categories/${item.slug}` : `/business/categories/${item.slug}`}
+                  >
+                    {item.isFeatured && (
+                      <div className="flex gap-1 items-center mb-2 text-green-400">
+                        <ArrowUpCircleIcon className="w-5 h-5" />
+                        <span>Featured</span>
+                      </div>
+                    )}
+                    {item.discount_code && (
+                      <div className="flex gap-1 items-center mb-2 text-green-400">
+                        <ReceiptPercentIcon className="w-5 h-5" />
+                        <span>Offering Discounts</span>
+                      </div>
+                    )}
+              
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                      <div className="flex-1">
+                        <h2 className="text-base text-text-color mb-1 font-semibold">
+                          {item.name}
+                        </h2>
+                        {item.description ? (
+                          <p className="text-sm text-[#050505] mb-5 break-all">
+                            {item.description.slice(0, 220) + '...'}
+                          </p>
+                        ) : (
+                          <p className="text-sm text-[#050505] mb-5 break-all"></p>
+                        )}
+                      </div>
+              
+                      <div className="relative w-[5vw] h-[5vw] rounded-full overflow-hidden ml-[20px]">
+              <Image
+              src={`${serverurl+item?.logo?.replace("/api/media/","media/")}`}
+              alt="My Logo"
+              layout="fill"
+              />
+              </div>
+                    </div>
+              
+                    <ul className="mt-2 mb-7 text-[15px] text-[#050505]">
+                      {item.phone && (
+                        <li className="flex gap-3 mb-2">
+                          <PhoneIcon className="w-6 h-6 text-text-gray" />
+                          <span>{item.phone}</span>
+                        </li>
+                      )}
+              
+                      {item.website && (
+                        <li className="flex gap-3 mb-2">
+                          <GlobeAsiaAustraliaIcon className="w-6 h-6 text-text-gray" />
+                          <span>{item.website.slice(0, 25) + '...'}</span>
+                        </li>
+                      )}
+              
+                      {item.email && (
+                        <li className="flex gap-3 mb-2">
+                          <EnvelopeIcon className="w-6 h-6 text-text-gray" />
+                          <span>{item.email}</span>
+                        </li>
+                      )}
+                   {item.city && (item.state || item.zip) && (
+                <li className="flex gap-3 mb-2">
+                  <FaAddressCard className="w-6 h-6 text-text-gray" />
+                  <span>
+                    {item.state && `${item.state}, `}
+                    {item.city && `${item.city}, `}
+                    {item.zip}
+                  </span>
+                </li>
+              )}
+              
+                    </ul>
+                  </Link>
+              
+                  {/* <div className="flex justify-between items-center">
+                    <StarRating rating={stats ? stats.avg_rating : 0} />
+                    {user_id ? (
+                      <button
+                        className={`w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center`}
+                        onClick={toggleFavorite}
+                      >
+                        <HeartIcon className={`w-7 h-7 ${isFavorite ? "text-red-500" : "text-gray-700"}`} />
+                      </button>
+                    ) : (
+                      <Link
+                        href="/login"
+                        className={`w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center`}
+                      >
+                        <HeartIcon className={`w-7 h-7 text-gray-700`} />
+                      </Link>
+                    )}
+                  </div> */}
+                </div>
+              </div>
+              
                 ))}
               </div>
             </div>

@@ -64,6 +64,7 @@ export default function JobDetails({ initialjobsData }) {
         method: "POST",
         body: formdata,
       });
+      console.log("response data",response.data)
 
       if (response.ok) {
         toast.success("Application submitted successfully! ");

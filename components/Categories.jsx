@@ -3,6 +3,7 @@ import {
   MicrophoneIcon,
 
 } from "@heroicons/react/16/solid";
+import Image from "next/image";
 import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
@@ -36,7 +37,7 @@ export default function Categories() {
       setLoading(true);
 
       try {
-        const response = await fetch(`${serverurl}get-alleventcategory/`);
+        const response = await fetch(`${serverurl}get-alleventcategories/`);
         const result = await response.json();
         if (response.ok) {
           rearrangeData(result.data);
