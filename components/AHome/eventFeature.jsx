@@ -39,7 +39,7 @@ const  Featuredevent = ({ events, serverurl }) => (
           {events.map((event, index) => (
             <SwiperSlide key={index}>
               <div className="border rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-                <Link  href={`//events/category/${event.slug}`}>
+                <Link  href={`/events/category/${event.slug}`}>
                   <div className="relative">
                     {/* Property Image */}
                     <Image

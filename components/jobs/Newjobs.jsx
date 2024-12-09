@@ -4,7 +4,7 @@ import Image from "next/image";
 import { H1, H2, H3, H4 } from "@/components/Typography";
 import { debounce } from "lodash";
 import dynamic from "next/dynamic";
-const toast = dynamic(() => import("react-toastify").then((mod) => mod.toast), { ssr: false });
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const DynamicMapComponent = dynamic(() => import("../AHome/Mapcomponent"), { ssr: false });

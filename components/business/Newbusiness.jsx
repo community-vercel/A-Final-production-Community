@@ -819,7 +819,7 @@ export default function Newbusiness({ initialbusinessData }) {
                         >
                           <H3 className="text-lg font-semibold text-blue-600">
                             <Link
-                              href={`/places/category/${category.category__slug}`}
+                              href={`/business/${category.category__slug}`}
                             >
                               {category.category__name}
                             </Link>
@@ -835,7 +835,7 @@ export default function Newbusiness({ initialbusinessData }) {
                               )
                               .map((subItem, index) => (
                                 <Link
-                                  href={`/places/category/${subItem.subcategory__slug}?isSubcategory=true`}
+                                  href={''}
                                   key={subItem.subcategory__id}
                                   className="text-sm text-gray-700 hover:underline flex items-center"
                                   title={`View all ${subItem.subcategory__name} places`}
