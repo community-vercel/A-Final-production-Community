@@ -185,7 +185,7 @@ const Page = () => {
             <div className="md:w-full">
               <div className="flex gap-x-4 gap-y-5 flex-wrap">
                 {results?.map((item) => (
-                <div className="flex-1 lg:w-[75%] p-4 md:p-6 lg:p-8 bg-white rounded-3xl border border-transparent hover:border-secondary transition-all duration-200 mx-auto">
+                <div key={item.slug} className="flex-1 lg:w-[75%] p-4 md:p-6 lg:p-8 bg-white rounded-3xl border border-transparent hover:border-secondary transition-all duration-200 mx-auto">
                 <div>
                   
                   <Link
